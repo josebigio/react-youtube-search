@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -40,10 +41,23 @@ class App extends Component{
     this.setState({selectedVideo});
   }
 
+  videoSearch(term) {
+      YTSearch({key: API_KEY, term }, (videos)=>{
+        console.log(videos);
+        this.setState({
+          videos: videos,
+          selectedVideo: videos[0]
+        });
+    });
+  }
+
   render() {
+
+    const videoSearch = _.debounce((term) => this.videoSearch(term), 300);
+
     return (
         <div>
-          <SearchBar/>
+          <SearchBar onInputSelected={videoSearch}/>
           <VideoDetail video={this.state.selectedVideo}/>
           <VideoList videos={this.state.videos} onSelectedVideo={this.onSelectedVideo.bind(this)}/>
         </div>

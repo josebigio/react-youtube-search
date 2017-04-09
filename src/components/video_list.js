@@ -8,18 +8,18 @@ class VideoList extends Component {
     }
 
     renderVideos() {
-        console.log('renderVideos');
+        const { onSelectedVideo } = this.props;
         return this.props.videos.map((video)=>
                 <VideoItem 
                     video={video}
                     key={video.etag}
-                    onVideoClicked={this.props.onSelectedVideo}/>
+                    onVideoClicked={onSelectedVideo}/>
         );
     }
 
     render() {
         return(
-           <ul className="col-md-12 list-group">
+           <ul className="col-md-4 list-group">
                {this.renderVideos()}
             </ul> 
         );
